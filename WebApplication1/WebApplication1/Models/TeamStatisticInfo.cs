@@ -2,7 +2,7 @@ namespace WebApplication1.Models;
 
 public class TeamStatisticsInfo
 {
-    public TeamStatisticsInfo(uint totalWon, uint defeats, uint totalBetsSum, uint wins, Guid teamId)
+    public TeamStatisticsInfo(Guid teamId, uint totalWon, uint totalBetsSum)
     {
         TotalWon = totalWon;
         TotalBetsSum = totalBetsSum;

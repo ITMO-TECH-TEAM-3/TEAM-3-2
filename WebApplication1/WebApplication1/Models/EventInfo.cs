@@ -2,12 +2,12 @@ namespace WebApplication1.Models;
 
 public class EventInfo
 {
-    public EventInfo(Guid clientId, List<float> coefficients)
+    public EventInfo(Guid eventId, List<float> coefficients)
     {
-        ClientId = clientId;
+        EventId = eventId;
         Coefficients = coefficients;
     }
     
-    public Guid ClientId { get; }
+    public Guid EventId { get; }
     public List<float> Coefficients { get; }
 }
