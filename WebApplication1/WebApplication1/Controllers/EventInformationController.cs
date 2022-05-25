@@ -20,9 +20,9 @@ public class EventInformationController : Controller
     {
         return StatusCode(501);
     }
-    
+
     [HttpGet]
-    [Route("/info/client/bets/match")]
+    [Route("/info/client/bets/tournament")]
     // return List<BetTournament>
     public IActionResult GetListOfTournamentBets(Guid clientId)
     {
