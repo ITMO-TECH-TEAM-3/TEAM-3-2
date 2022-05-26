@@ -1,6 +1,8 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.OpenApi.Models;
 using Newtonsoft.Json;
+using WebApplication1.Controllers;
+using WebApplication1.Services;
 
 namespace WebApplication1;
 
@@ -33,6 +35,9 @@ public class Startup
         {
             opt.UseSqlServer(Configuration.GetConnectionString("BetServer"));
         });
+        services.AddScoped<BetsService>();
+        services.AddScoped<EventInformationService>();
+        services.AddScoped<StatisticsService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

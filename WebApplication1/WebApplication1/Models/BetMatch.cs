@@ -7,6 +7,8 @@ public class BetMatch : IBet
     public Guid EventId { get; private init;}
     public Guid TeamId { get; private init;}
     public uint Sum { get; private init;}
+    public BetResult Result { get; private init; }
+
     public BetMatch(Guid id, Guid clientId, Guid eventId, uint sum, Guid teamId)
     {
         Id = id;
@@ -14,5 +16,6 @@ public class BetMatch : IBet
         EventId = eventId;
         Sum = sum;
         TeamId = teamId;
+        Result = BetResult.InProgress;
     }
 }
