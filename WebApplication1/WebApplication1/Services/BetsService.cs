@@ -9,21 +9,21 @@ public class BetsService
     public BetsService(DatabaseContext context) {
         _context = context;
     }
-    public async Task<BetMatch> CreateBetOnMatch(Guid clientId, uint sum, Guid eventId, Guid teamId)
+    public BetMatch? CreateBetOnMatch(Guid clientId, uint sum, Guid eventId, Guid teamId)
     {
         //TODO: проверка на ставку на себя
         var bet = new BetMatch(Guid.NewGuid(), clientId,  eventId, sum, teamId);
-        await _context.MatchBets!.AddAsync(bet);
-        await _context.SaveChangesAsync();
+        _context.MatchBets!.Add(bet);
+        _context.SaveChanges();
         return bet;
     }
     
-    public async Task<BetTournament> CreateBetOnTournament(Guid clientId, uint sum, Guid eventId, Guid teamId, uint place)
+    public BetTournament? CreateBetOnTournament(Guid clientId, uint sum, Guid eventId, Guid teamId, uint place)
     {
         //TODO: проверка на ставку на себя
         var bet = new BetTournament(Guid.NewGuid(), clientId,  eventId, sum, teamId, place);
-        await _context.TournamentsBets!.AddAsync(bet);
-        await _context.SaveChangesAsync();
+        _context.TournamentsBets!.Add(bet);
+        _context.SaveChanges();
         return bet;
     }
 }

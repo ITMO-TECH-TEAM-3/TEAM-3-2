@@ -15,7 +15,7 @@ public class StatisticsController : Controller
     [Route("/statistics/client")]
     public IActionResult GetClientStatistics(Guid clientId)
     {
-        if (clientId == Guid.Empty) return StatusCode((int) HttpStatusCode.BadRequest);
+        if (clientId == Guid.Empty) return BadRequest();
         var result = _service.GetClientStatistics(clientId);
         if (result != null)
         {
@@ -28,7 +28,7 @@ public class StatisticsController : Controller
     [Route("/statistics/team")]
     public IActionResult GetTeamStatistics(Guid teamId)
     {
-        if (teamId == Guid.Empty) return StatusCode((int) HttpStatusCode.BadRequest);
+        if (teamId == Guid.Empty) return BadRequest();
         var result = _service.GetTeamStatistics(teamId);
         if (result != null)
         {

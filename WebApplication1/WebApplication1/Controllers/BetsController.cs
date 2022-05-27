@@ -1,5 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using WebApplication1.Models;
 using WebApplication1.Services;
 
 namespace WebApplication1.Controllers;
@@ -15,16 +14,28 @@ public class BetsController : Controller
     [HttpPost]
     [Route("/create/match")]
     // returns BetMatch
-    public async Task<BetMatch> CreateBetOnMatch(Guid clientId, uint sum, Guid eventId, Guid teamId)
+    public IActionResult CreateBetOnMatch(Guid clientId, uint sum, Guid eventId, Guid teamId)
     {
-        return await _service.CreateBetOnMatch(clientId, sum, eventId, teamId);
+        if (eventId == Guid.Empty || teamId == Guid.Empty || clientId == Guid.Empty || sum <= 0) return BadRequest();
+        var result = _service.CreateBetOnMatch(clientId, sum, eventId, teamId);
+        if (result != null)
+        {
+            return Ok(result);
+        }
+        return NotFound();
     }
 
     [HttpPost]
     [Route("/create/tournament")]
     // returns BetTournament
-    public async Task<BetTournament> CreateBetOnTournament(Guid clientId, uint sum, Guid eventId, Guid teamId, uint place)
+    public IActionResult CreateBetOnTournament(Guid clientId, uint sum, Guid eventId, Guid teamId, uint place)
     {
-        return await _service.CreateBetOnTournament(clientId, sum, eventId, teamId, place);
+        if (eventId == Guid.Empty || teamId == Guid.Empty || clientId == Guid.Empty || sum <= 0) return BadRequest();
+        var result = _service.CreateBetOnTournament(clientId, sum, eventId, teamId, place);
+        if (result != null)
+        {
+            return Ok(result);
+        }
+        return NotFound();
     }
 }

@@ -16,7 +16,7 @@ public class EventInformationController : Controller
     // return IEnumerable<EventInfo>
     public IActionResult GetEventInfo(Guid eventId)
     {
-        if (eventId == Guid.Empty) return StatusCode((int) HttpStatusCode.BadRequest);
+        if (eventId == Guid.Empty) return BadRequest();
         var result = _service.GetEventInfo(eventId);
         if (result != null && result.Any())
         {
@@ -30,7 +30,7 @@ public class EventInformationController : Controller
     // return List<BetMatch>
     public IActionResult GetListOfMatchBets(Guid clientId)
     {
-        if (clientId == Guid.Empty) return StatusCode((int) HttpStatusCode.BadRequest);
+        if (clientId == Guid.Empty) return BadRequest();
         var result = _service.GetListOfMatchBets(clientId);
         if (result != null && result.Any())
         {
@@ -44,7 +44,7 @@ public class EventInformationController : Controller
     // return List<BetTournament>
     public IActionResult GetListOfTournamentBets(Guid clientId)
     {
-        if (clientId == Guid.Empty) return StatusCode((int) HttpStatusCode.BadRequest);
+        if (clientId == Guid.Empty) return BadRequest();
         var result = _service.GetListOfTournamentBets(clientId);
         if (result != null && result.Any())
         {

@@ -9,12 +9,12 @@ public class StatisticsService
     public StatisticsService(DatabaseContext context) {
         _context = context;
     }
-    public ClientStatisticsInfo GetClientStatistics(Guid clientId)
+    public ClientStatisticsInfo? GetClientStatistics(Guid clientId)
     {
         return null;
     }
     
-    public TeamStatisticsInfo GetTeamStatistics(Guid teamId)
+    public TeamStatisticsInfo? GetTeamStatistics(Guid teamId)
     {
         return null;
     }
