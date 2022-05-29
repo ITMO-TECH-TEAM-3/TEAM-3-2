@@ -8,8 +8,8 @@ public class TeamStatisticsInfo
         TotalBetsSum = totalBetsSum;
         TeamId = teamId;
     }
+
     public Guid TeamId { get; }
     public uint TotalBetsSum { get; }
     public uint TotalWon { get; }
-
 }

@@ -11,7 +11,7 @@ public class EventInfo
     }
 
     public Guid Id { get; private init; }
-    public Guid EventId { get; private init;  }
-    public double Coefficient { get; private init;  }
-    public Guid TeamId { get; private init;  }
+    public Guid EventId { get; private init; }
+    public double Coefficient { get; private init; }
+    public Guid TeamId { get; private init; }
 }
