@@ -10,6 +10,7 @@ public class ClientStatisticsInfo
         Wins = wins;
         ClientId = clientId;
     }
+
     public Guid ClientId { get; }
     public uint Wins { get; }
     public uint Defeats { get; }
