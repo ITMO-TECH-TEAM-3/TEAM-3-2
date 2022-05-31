@@ -4,12 +4,12 @@ public class TeamStatisticsInfo
 {
     public TeamStatisticsInfo(Guid teamId, uint totalWon, uint totalBetsSum)
     {
+        TeamId = teamId;
         TotalWon = totalWon;
         TotalBetsSum = totalBetsSum;
-        TeamId = teamId;
     }
 
     public Guid TeamId { get; }
-    public uint TotalBetsSum { get; }
     public uint TotalWon { get; }
+    public uint TotalBetsSum { get; }
 }
