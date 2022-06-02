@@ -1,4 +1,4 @@
-using WebApplication1.enums;
+using WebApplication1.Enums;
 
 namespace WebApplication1.Models;
 
