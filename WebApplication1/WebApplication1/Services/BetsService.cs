@@ -1,3 +1,4 @@
+using WebApplication1.Enums;
 using WebApplication1.Models;
 
 namespace WebApplication1.Services;
@@ -21,7 +22,7 @@ public class BetsService
     public BetTournament? CreateBetOnTournament(Guid clientId, uint sum, Guid eventId, Guid teamId, uint place)
     {
         //TODO: проверка на ставку на себя
-        var bet = new BetTournament(Guid.NewGuid(), clientId,  eventId, sum, teamId, place);
+        var bet = new BetTournament(Guid.NewGuid(), clientId,  eventId, sum, teamId, place, BetResult.InProgress);
         _context.TournamentsBets!.Add(bet);
         _context.SaveChanges();
         return bet;
