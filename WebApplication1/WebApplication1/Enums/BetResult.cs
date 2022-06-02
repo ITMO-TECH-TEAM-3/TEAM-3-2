@@ -1,4 +1,4 @@
-namespace WebApplication1.enums;
+namespace WebApplication1.Enums;
 
 public enum BetResult : short
 {
