@@ -37,5 +37,7 @@ public class EventUpdateService
             contextTournamentsBet.TeamId,
             contextTournamentsBet.Place,
             tournamentInfo.TournamentStatus));
+
+        _context.SaveChanges();
     }
 }
