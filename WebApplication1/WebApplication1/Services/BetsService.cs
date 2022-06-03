@@ -13,7 +13,7 @@ public class BetsService
     public BetMatch? CreateBetOnMatch(Guid clientId, uint sum, Guid eventId, Guid teamId)
     {
         //TODO: проверка на ставку на себя
-        var bet = new BetMatch(Guid.NewGuid(), clientId,  eventId, sum, teamId);
+        var bet = new BetMatch(Guid.NewGuid(), clientId,  eventId, sum, teamId, BetResult.InProgress);
         _context.MatchBets!.Add(bet);
         _context.SaveChanges();
         return bet;
