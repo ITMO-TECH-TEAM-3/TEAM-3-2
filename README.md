@@ -44,6 +44,7 @@
   - GetListOfMatchBets - получение информации о доступных для пользователя ставках на матч. Метод принимает Id матча - clientId - и возвращает список ставок, которые может сделать пользователь.
   - GetListOfTournamentBets - получение информации о доступных для пользователя ставках на турнир. Метод принимает Id клиента - clientId - и возвращает список ставок, которые может сделать пользователь.
 
+
 ## **Сущности**
 
 Ставка на матч(BetMatch)
@@ -78,3 +79,165 @@
 | `UUID TeamId` | id команды, на которую была сделана ставка |
 | `Uint Place` | место, которая должна занять команда согласно ставке |
 | `EventResult Result` | статус события [ `Lose, Win, NotStarted, InProgress` ] |
+
+
+
+## **Запросы**
+
+### Ставка на матч
+
+Http запрос
+`POST /create/match`
+
+Тело запроса
+
+```
+{
+  "clientId": "8df4174b-697b-4f59-a202-614ff124f1ef",
+  "eventId": "4f68f672-d310-47ce-b20c-7d308f436c58",
+  "sum": 123,
+  "teamId": "9ff2f7e3-34a3-4675-826f-d387120d4a5d"
+}
+```
+
+Возвращаемое значение
+`UUID id` - id ставки
+
+
+
+### Ставка на турнир
+
+Http запрос
+`POST /create/tournament`
+
+Тело запроса
+
+```
+{
+  "clientId": "9ff2f7e3-34a3-4675-826f-d387120d4a5d",
+  "eventId": "9ff2f7e3-34a3-4675-826f-d387120d4a5d",
+  "sum": 123,
+  "teamId": "9ff2f7e3-34a3-4675-826f-d387120d4a5d",
+  "place": 3
+}
+```
+
+Возвращаемое значение
+`UUID id` - id ставки
+
+
+
+### Информация о событии
+
+Http запрос
+`GET /info/event`
+
+Тело запроса
+
+```
+{
+  "eventId": "9ff2f7e3-34a3-4675-826f-d387120d4a5d"
+}
+```
+
+Возвращаемое значение
+`EventInfo eventInfo` - информация о событии
+
+```
+{
+  "id": "8df4174b-697b-4f59-a202-614ff124f1ef",
+  "eventId": "4f68f672-d310-47ce-b20c-7d308f436c58",
+  "coefficient": "1",
+  "teamId": "9ff2f7e3-34a3-4675-826f-d387120d4a5d",
+  "place": "3",
+  "result": "2"
+}
+```
+
+
+
+### Информация о сделанных клиентом ставках на матчи
+
+Http запрос
+`GET /info/client/bets/match`
+
+Тело запроса
+
+```
+{
+  "clietnId": "9ff2f7e3-34a3-4675-826f-d387120d4a5d"
+}
+```
+
+Возвращаемое значение
+`List<EventInfo> eventInfoList` - лист с информацией о событиях
+
+
+
+### Информация о сделанных клиентом ставках на турниры
+
+Http запрос
+`GET /info/client/bets/tournament`
+
+Тело запроса
+
+```
+{
+  "clietnId": "9ff2f7e3-34a3-4675-826f-d387120d4a5d"
+}
+```
+
+Возвращаемое значение
+`List<EventInfo> eventInfoList` - лист с информацией о событиях
+
+
+
+### Статистика клиента
+
+Http запрос
+`GET /statistics/client`
+
+Тело запроса
+
+```
+{
+  "clietnId": "9ff2f7e3-34a3-4675-826f-d387120d4a5d"
+}
+```
+
+Возвращаемое значение
+`ClientStatisticsInfo clientStatisticsInfo` - статистика клиента
+```
+{
+  "clientId": "4c8e23ac-e312-42b9-931c-9e9d929cd1cf",
+  "wins": 0,
+  "defeats": 0,
+  "totalBetsSum": 480,
+  "totalWon": 0
+}
+```
+
+
+
+### Статистика клиента
+
+Http запрос
+`GET /statistics/client`
+
+Тело запроса
+
+```
+{
+  "teamId": "9ff2f7e3-34a3-4675-826f-d387120d4a5d"
+}
+```
+
+Возвращаемое значение
+`TeamStatisticsInfo teamStatisticsInfo` - статистика клиента
+```
+{
+  "teamId": "4c8e23ac-e312-42b9-931c-9e9d929cd1ee",
+  "totalWon": 0,
+  "totalBetsSum": 159
+}
+```
