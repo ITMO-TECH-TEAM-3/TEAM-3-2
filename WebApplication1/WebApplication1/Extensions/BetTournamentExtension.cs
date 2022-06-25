@@ -12,7 +12,6 @@ public static class BetTournamentExtension
             betTournament.EventId,
             betTournament.Sum,
             betTournament.TeamId,
-            betTournament.Place,
             result);
     }
 }

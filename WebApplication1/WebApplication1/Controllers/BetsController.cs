@@ -28,10 +28,10 @@ public class BetsController : Controller
     [HttpPost]
     [Route("/create/tournament")]
     // returns BetTournament
-    public IActionResult CreateBetOnTournament(Guid clientId, uint sum, Guid eventId, Guid teamId, uint place)
+    public IActionResult CreateBetOnTournament(Guid clientId, uint sum, Guid eventId, Guid teamId)
     {
         if (eventId == Guid.Empty || teamId == Guid.Empty || clientId == Guid.Empty || sum <= 0) return BadRequest();
-        var result = _service.CreateBetOnTournament(clientId, sum, eventId, teamId, place);
+        var result = _service.CreateBetOnTournament(clientId, sum, eventId, teamId);
         if (result != null)
         {
             return Ok(result);
