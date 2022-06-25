@@ -12,7 +12,7 @@ public class BetTournament : IBet
     public uint Place { get; private init; }
     public BetResult Result { get; private init; }
 
-    public BetTournament(Guid id, Guid clientId, Guid eventId, uint sum, Guid teamId, uint place)
+    public BetTournament(Guid id, Guid clientId, Guid eventId, uint sum, Guid teamId, uint place, BetResult result)
     {
         Id = id;
         ClientId = clientId;
@@ -20,6 +20,6 @@ public class BetTournament : IBet
         Sum = sum;
         TeamId = teamId;
         Place = place;
-        Result = BetResult.InProgress;
+        Result = result;
     }
 }

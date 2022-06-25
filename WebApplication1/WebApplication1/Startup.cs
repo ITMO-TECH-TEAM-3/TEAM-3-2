@@ -38,6 +38,7 @@ public class Startup
         services.AddScoped<BetsService>();
         services.AddScoped<EventInformationService>();
         services.AddScoped<StatisticsService>();
+        services.AddScoped<UpdateEventResultService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

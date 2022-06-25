@@ -24,7 +24,7 @@ public class BetsService
             return null;
         //TODO: проверка на ставку на себя
         UpdateEventsInfo(events, teamId, sum);
-        var bet = new BetMatch(Guid.NewGuid(), clientId, eventId, sum, teamId);
+        var bet = new BetMatch(Guid.NewGuid(), clientId, eventId, sum, teamId, BetResult.InProgress);
         _context.MatchBets!.Add(bet);
         _context.SaveChanges();
         return bet;
@@ -37,7 +37,7 @@ public class BetsService
             return null;
         //TODO: проверка на ставку на себя
         UpdateEventsInfo(events, teamId, sum);
-        var bet = new BetTournament(Guid.NewGuid(), clientId, eventId, sum, teamId, place);
+        var bet = new BetTournament(Guid.NewGuid(), clientId, eventId, sum, teamId, place, BetResult.InProgress);
         _context.TournamentsBets!.Add(bet);
         _context.SaveChanges();
         return bet;
