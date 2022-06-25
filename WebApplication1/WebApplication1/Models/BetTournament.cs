@@ -12,6 +12,7 @@ public class BetTournament : IBet
     public BetResult Result { get; private init; }
 
     public BetTournament(Guid id, Guid clientId, Guid eventId, uint sum, Guid teamId, BetResult result)
+
     {
         Id = id;
         ClientId = clientId;
@@ -19,5 +20,6 @@ public class BetTournament : IBet
         Sum = sum;
         TeamId = teamId;
         Result = result;
+
     }
 }

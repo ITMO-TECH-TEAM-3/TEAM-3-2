@@ -38,6 +38,7 @@ public class BetsService
         //TODO: проверка на ставку на себя
         UpdateEventsInfo(events, teamId, sum);
         var bet = new BetTournament(Guid.NewGuid(), clientId, eventId, sum, teamId, BetResult.InProgress);
+
         _context.TournamentsBets!.Add(bet);
         _context.SaveChanges();
         return bet;
