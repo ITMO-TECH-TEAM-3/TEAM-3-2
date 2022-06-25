@@ -10,13 +10,6 @@ public class BetsService
     public BetsService(DatabaseContext context)
     {
         _context = context;
-        // в качестве теста добавляю event
-        var a = Guid.NewGuid();
-        if (_context.Events != null && _context.Events.Any())
-            return;
-        _context.Events?.Add(new EventInfo(Guid.NewGuid(), a, 0, Guid.NewGuid(), EventResult.NotStarted, 0));
-        _context.Events?.Add(new EventInfo(Guid.NewGuid(), a, 0, Guid.NewGuid(), EventResult.NotStarted, 0));
-        _context.SaveChanges();
     }
 
     public BetMatch? CreateBetOnMatch(Guid clientId, uint sum, Guid eventId, Guid teamId)
