@@ -30,14 +30,14 @@ public class BetsService
         return bet;
     }
 
-    public BetTournament? CreateBetOnTournament(Guid clientId, uint sum, Guid eventId, Guid teamId, uint place)
+    public BetTournament? CreateBetOnTournament(Guid clientId, uint sum, Guid eventId, Guid teamId)
     {
         var events = _context.Events!.Where(evt => evt.EventId == eventId && evt.TeamId == teamId).ToList();
         if (!events.Any())
             return null;
         //TODO: проверка на ставку на себя
         UpdateEventsInfo(events, teamId, sum);
-        var bet = new BetTournament(Guid.NewGuid(), clientId, eventId, sum, teamId, place);
+        var bet = new BetTournament(Guid.NewGuid(), clientId, eventId, sum, teamId);
         _context.TournamentsBets!.Add(bet);
         _context.SaveChanges();
         return bet;
