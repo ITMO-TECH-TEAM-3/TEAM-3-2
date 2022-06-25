@@ -12,8 +12,8 @@ public class BetsService
         _context = context;
         // в качестве теста добавляю event
         var a = Guid.NewGuid();
-        _context.Events?.Add(new EventInfo(Guid.NewGuid(), a, 0, Guid.NewGuid(), EventResult.NotStarted, 0));
-        _context.Events?.Add(new EventInfo(Guid.NewGuid(), a, 0, Guid.NewGuid(), EventResult.NotStarted, 0));
+        _context.Events?.Add(new EventInfo(Guid.NewGuid(), a, 1, Guid.NewGuid(), EventResult.NotStarted, 0));
+        _context.Events?.Add(new EventInfo(Guid.NewGuid(), a, 1, Guid.NewGuid(), EventResult.NotStarted, 0));
         _context.SaveChanges();
     }
 
@@ -45,8 +45,7 @@ public class BetsService
 
     private double NewCoefficient(EventInfo evt, int sum)
     {
-        //TODO: реализовать пересчет коэффициентов
-        return default;
+        return (double) sum / (sum - evt.TotalSum);
     }
 
     private void UpdateEventsInfo(List<EventInfo> events, Guid teamId, uint sum)
