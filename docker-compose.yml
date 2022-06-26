@@ -1,0 +1,23 @@
+version: '3.9'
+
+services:
+  mssql:
+    image: mcr.microsoft.com/mssql/server:2019-latest
+    ports:
+      - 1433:1433
+    volumes:
+      - ~/apps/mssql/data:/var/lib/mssqlql/data
+    environment:
+      - ACCEPT_EULA=Y
+      - SA_PASSWORD=Zse4rfv+
+    restart: always
+    container_name: mssql1
+  bets_server:
+    image: bets_server
+    ports:
+      - "5000:5000"
+      - "5001:5001"
+    build: .
+    depends_on:
+      - mssql
+    container_name: bets_server
