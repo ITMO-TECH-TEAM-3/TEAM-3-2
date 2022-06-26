@@ -7,10 +7,11 @@ namespace WebApplication1.Services;
 
 public class TournamentService
 {
+    // возвращает List<Guid> команд в турнире
     public List<Guid> TeamListInTournament(Guid eventId)
     {
-        // возвращает List<Guid> команд в турнире
-        var request = WebRequest.Create($"https://localhost:5001/api/tournament/{eventId}/teams");
+        var url = Environment.GetEnvironmentVariable("TOURNAMENTS_SERVICE_URL");
+        var request = WebRequest.Create($"http://{url}/api/tournament/{eventId}/teams");
         request.Method = WebRequestMethods.Http.Get;
         var response = request.GetResponse();
         var responseStream = response.GetResponseStream();
@@ -23,7 +24,10 @@ public class TournamentService
     public List<Guid> TeamListInMatch(Guid eventId)
     {
         // возвращает List<Guid> команд в матче
-        var request = WebRequest.Create($"https://localhost:5001/api/match/{eventId}");
+        var url = Environment.GetEnvironmentVariable("TOURNAMENTS_SERVICE_URL");
+        if (url == string.Empty) return new List<Guid>();
+
+        var request = WebRequest.Create($"http://{url}/api/match/{eventId}");
         request.Method = WebRequestMethods.Http.Get;
         var response = request.GetResponse();
         var responseStream = response.GetResponseStream();

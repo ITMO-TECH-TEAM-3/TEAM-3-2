@@ -17,6 +17,9 @@ services:
     ports:
       - "5000:5000"
       - "5001:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+;http://+
     build: .
     depends_on:
       - mssql

@@ -8,8 +8,9 @@ public class UserService
 {
     public List<Guid> UserListInTeam(Guid teamId)
     {
-        // поменять url на тот, который возвращает List<Guid> игроков в команде
-        var request = WebRequest.Create($"https://localhost:5001/players-rest/all/?id={teamId}");
+        var url = Environment.GetEnvironmentVariable("USERS_SERVICE_URL");
+        if (url == string.Empty) return new List<Guid>();
+        var request = WebRequest.Create($"http://{url}/players-rest/all/?id={teamId}");
         request.Method = WebRequestMethods.Http.Get;
         var response = request.GetResponse();
         var responseStream = response.GetResponseStream();

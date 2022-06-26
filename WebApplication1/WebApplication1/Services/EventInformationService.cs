@@ -1,4 +1,3 @@
-using WebApplication1.Enums;
 using WebApplication1.Models;
 
 namespace WebApplication1.Services;
@@ -10,8 +9,6 @@ public class EventInformationService
     public EventInformationService(DatabaseContext context)
     {
         _context = context;
-        _context.Events!.Add(new EventInfo(Guid.NewGuid(), Guid.NewGuid(), 3.22, Guid.NewGuid(), EventResult.NotStarted, 0));
-        _context.SaveChanges();
     }
     public IEnumerable<EventInfo>? GetEventInfo(Guid eventId)
     {

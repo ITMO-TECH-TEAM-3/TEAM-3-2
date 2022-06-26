@@ -9,6 +9,5 @@ public interface IBet
     public Guid EventId { get; }
     public Guid TeamId { get; }
     public uint Sum { get; }
-
     public BetResult Result { get; }
 }
