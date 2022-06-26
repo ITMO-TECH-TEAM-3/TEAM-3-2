@@ -11,6 +11,8 @@ public class TournamentService
     public List<Guid> TeamListInTournament(Guid eventId)
     {
         var url = Environment.GetEnvironmentVariable("TOURNAMENTS_SERVICE_URL");
+        if (url == string.Empty) return new List<Guid>();
+
         var request = WebRequest.Create($"http://{url}/api/tournament/{eventId}/teams");
         request.Method = WebRequestMethods.Http.Get;
         var response = request.GetResponse();

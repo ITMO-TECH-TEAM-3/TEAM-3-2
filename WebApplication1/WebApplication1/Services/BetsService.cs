@@ -9,7 +9,7 @@ public class BetsService
     private readonly UserService _userService;
     private readonly TournamentService _tournamentService;
 
-    public BetsService(DatabaseContext context, UserService userService, TournamentService tournamentService, TournamentService tournamentService1)
+    public BetsService(DatabaseContext context, UserService userService, TournamentService tournamentService)
     {
         _context = context;
         _userService = userService;
@@ -48,7 +48,7 @@ public class BetsService
 
     public BetTournament? CreateBetOnTournament(Guid clientId, uint sum, Guid eventId, Guid teamId)
     {
-        var teams = _tournamentService.TeamListInMatch(eventId);
+        var teams = _tournamentService.TeamListInTournament(eventId);
         if (teams.Count == 0)
             return null;
         var players = new List<Guid>();
@@ -66,8 +66,7 @@ public class BetsService
             _context.Events?.Add(new EventInfo(Guid.NewGuid(), eventId, NewCoefficient(sum, sum), teamId,
                 EventResult.NotStarted, sum));
         }
-        if (events.First().Result != EventResult.NotStarted)
-            return null;
+        if (events.First().Result != EventResult.NotStarted) return null;
         
         UpdateEventsInfo(events, teamId, sum);
         var bet = new BetTournament(Guid.NewGuid(), clientId, eventId, sum, teamId, BetResult.InProgress);
