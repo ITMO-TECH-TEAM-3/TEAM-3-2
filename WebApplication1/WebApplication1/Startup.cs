@@ -28,7 +28,9 @@ public class Startup
         {
             c.SwaggerDoc("v1", new OpenApiInfo { Title = "WebApplication1", Version = "v1" });
         });
-
+        
+        
+        
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
         services.AddDbContext<DatabaseContext>(opt =>
@@ -39,15 +41,18 @@ public class Startup
         services.AddScoped<EventInformationService>();
         services.AddScoped<StatisticsService>();
         services.AddScoped<UpdateEventResultService>();
+        services.AddScoped<UserService>();
+        services.AddScoped<TournamentService>();
     }
 
     // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
     {
-        
+        if (env.IsDevelopment())
+        {
             app.UseSwagger();
             app.UseSwaggerUI();
-        
+        }
 
         app.UseRouting();
         app.UseAuthorization();

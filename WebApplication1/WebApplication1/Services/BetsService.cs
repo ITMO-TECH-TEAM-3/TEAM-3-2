@@ -6,21 +6,40 @@ namespace WebApplication1.Services;
 public class BetsService
 {
     private readonly DatabaseContext _context;
+    private readonly UserService _userService;
+    private readonly TournamentService _tournamentService;
 
-    public BetsService(DatabaseContext context)
+    public BetsService(DatabaseContext context, UserService userService, TournamentService tournamentService)
     {
         _context = context;
+        _userService = userService;
+        _tournamentService = tournamentService;
     }
 
     public BetMatch? CreateBetOnMatch(Guid clientId, uint sum, Guid eventId, Guid teamId)
     {
         var events = _context.Events!.Where(evt => evt.EventId == eventId).ToList();
+        var teams = _tournamentService.TeamListInMatch(eventId);
+        var players = new List<Guid>();
+
+        if (teams.Count != 2) return null;
+        
+        foreach (var teamPlayers in teams.Select(team => _userService.UserListInTeam(team)))
+        {
+            if (teamPlayers.Count == 0)
+                return null;
+            players.AddRange(teamPlayers);
+        }
+        if (players.Contains(clientId)) return null;
         if (!events.Any())
-            return null;
-        if (events.First().Result != EventResult.NotStarted)
-            return null;
-        //TODO: проверка на ставку на себя
+        {
+            _context.Events?.Add(new EventInfo(Guid.NewGuid(), eventId, NewCoefficient(sum, sum), teamId,
+                EventResult.NotStarted, sum));
+        }
+        if (events.First().Result != EventResult.NotStarted) return null;
+        
         UpdateEventsInfo(events, teamId, sum);
+        
         var bet = new BetMatch(Guid.NewGuid(), clientId, eventId, sum, teamId, BetResult.InProgress);
         _context.MatchBets!.Add(bet);
         _context.SaveChanges();
@@ -29,12 +48,26 @@ public class BetsService
 
     public BetTournament? CreateBetOnTournament(Guid clientId, uint sum, Guid eventId, Guid teamId)
     {
+        var teams = _tournamentService.TeamListInTournament(eventId);
+        if (teams.Count == 0)
+            return null;
+        var players = new List<Guid>();
+        foreach (var teamPlayers in teams.Select(team => _userService.UserListInTeam(team)))
+        {
+            if (teamPlayers.Count == 0)
+                return null;
+            players.AddRange(teamPlayers);
+        }
+        if (players.Contains(clientId))
+            return null;
         var events = _context.Events!.Where(evt => evt.EventId == eventId).ToList();
         if (!events.Any())
-            return null;
-        if (events.First().Result != EventResult.NotStarted)
-            return null;
-        //TODO: проверка на ставку на себя
+        {
+            _context.Events?.Add(new EventInfo(Guid.NewGuid(), eventId, NewCoefficient(sum, sum), teamId,
+                EventResult.NotStarted, sum));
+        }
+        if (events.First().Result != EventResult.NotStarted) return null;
+        
         UpdateEventsInfo(events, teamId, sum);
         var bet = new BetTournament(Guid.NewGuid(), clientId, eventId, sum, teamId, BetResult.InProgress);
 

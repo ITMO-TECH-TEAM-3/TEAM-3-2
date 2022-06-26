@@ -17,6 +17,11 @@ services:
     ports:
       - "5000:5000"
       - "5001:5001"
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - ASPNETCORE_URLS=https://+;http://+
+      - USERS_SERVICE_URL=
+      - TOURNAMENTS_SERVICE_URL=
     build: .
     depends_on:
       - mssql
