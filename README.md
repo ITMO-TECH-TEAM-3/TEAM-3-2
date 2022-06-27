@@ -50,6 +50,25 @@
 | `EventResult Result` | статус события [ `Lose, Win, Draw, NotStarted, InProgress` ] |
 
 
+Статистика клиента(ClientStatisticsInfo)
+| Поле      | Описание  |
+|-----------|-----------|
+| `UUID ClientId` | id клиента, о котором получают информацию |
+| `Uint Wins` | количество выигранных ставок |
+| `Uint Defeats` | количество проигранных ставок |
+| `Uint TotalBetsSum` | общая сумма ставок |
+| `Uint TotalWon` | общая сумма выигранных ставок |
+
+
+Статистика команды(TeamStatisticsInfo)
+| Поле      | Описание  |
+|-----------|-----------|
+| `UUID TeamId` | id клиента, о котором получают информацию |
+| `Uint TotalWon` | общая сумма выигранных ставок |
+| `Uint TotalBetsSum` | общая сумма сделанных на команду ставок |
+
+
+
 
 ## **Запросы**
 
@@ -60,14 +79,10 @@
 Http запрос
 `POST /create/match`
 
-Curl
+Пример использования с curl
 
 `curl -X 'POST' \
-  'https://localhost:7191/create/match
-  ?clientId=8df4174b-697b-4f59-a202-614ff124f1ef  
-  &sum=123
-  &eventId=8df4174b-697b-4f59-a202-614ff124f1ef
-  &teamId=8df4174b-697b-4f59-a202-614ff124f1ef' \
+  'https://localhost:7191/create/match?clientId=8df4174b-697b-4f59-a202-614ff124f1ef  &sum=123&eventId=8df4174b-697b-4f59-a202-614ff124f1ef&teamId=8df4174b-697b-4f59-a202-614ff124f1ef' \
   -H 'accept: */*' \
   -d ''`
 
@@ -77,6 +92,7 @@ eventId - id события, на которое делается ставка
 teamId - id команды, на которую делается ставка
 
 Возвращаемое значение
+
 Сущность - ставка на матч
 
 
@@ -88,14 +104,10 @@ teamId - id команды, на которую делается ставка
 Http запрос
 `POST /create/tournament`
 
-Curl
+Пример использования с curl
 
 `curl -X 'POST' \
-  'https://localhost:7191/create/tournament
-  ?clientId=2728e16b-74bc-46ef-8e85-eb1d97216040
-  &sum=12
-  3&eventId=2728e16b-74bc-46ef-8e85-eb1d97216040
-  &teamId=2728e16b-74bc-46ef-8e85-eb1d97216040' \
+  'https://localhost:7191/create/tournament?clientId=2728e16b-74bc-46ef-8e85-eb1d97216040&sum=123&eventId=2728e16b-74bc-46ef-8e85-eb1d97216040&teamId=2728e16b-74bc-46ef-8e85-eb1d97216040' \
   -H 'accept: */*' \
   -d ''`
   
@@ -105,6 +117,7 @@ eventId - id события, на которое делается ставка
 teamId - id команды, на которую делается ставка
 
 Возвращаемое значение
+
 Сущность - ставка на турнир
 
 
@@ -114,30 +127,17 @@ teamId - id команды, на которую делается ставка
 Http запрос
 `GET /info/event`
 
-Curl
+Пример использования с curl
 
-curl -X 'GET' \
+`curl -X 'GET' \
   'https://localhost:7191/info/event?eventId=2728e16b-74bc-46ef-8e85-eb1d97216040' \
-  -H 'accept: */*'
+  -H 'accept: */*'`
+
+eventId - id события, информацию о котором нужно получить
 
 Возвращаемое значение
-`EventInfo eventInfo` - информация о событии
 
-```
-{
-  "id": "8df4174b-697b-4f59-a202-614ff124f1ef",
-  "eventId": "4f68f672-d310-47ce-b20c-7d308f436c58",
-  "coefficient": "1",
-  "teamId": "9ff2f7e3-34a3-4675-826f-d387120d4a5d",
-  "result": "2",
-  "totalSum": "100"
-}
-```
-clietnId - id клиента, который хочет сделать ставку
-sum - сумма ставки
-eventId - id события, на которое делается ставка
-teamId - id команды, на которую делается ставка
-totalSum - сумма всех ставок на данное событие
+Сущность - информация о событии
 
 
 
@@ -148,11 +148,14 @@ Http запрос
 
 Пример использования с curl
 
-curl -X 'GET' \
+`curl -X 'GET' \
   'http://172.18.0.3:5000/info/client/bets/match?clientId=9ff2f7e3-34a3-4675-826f-d387120d4a5d' \
-  -H 'accept: */*'
+  -H 'accept: */*'`
+
+clientId - id клиента, о котором нужно получить информацию
 
 Возвращаемое значение
+
 `List<EventInfo> eventInfoList` - лист с информацией о событиях
 
 
@@ -162,15 +165,16 @@ curl -X 'GET' \
 Http запрос
 `GET /info/client/bets/tournament`
 
-Тело запроса
+Пример использования с curl
 
-```
-{
-  "clietnId": "9ff2f7e3-34a3-4675-826f-d387120d4a5d"
-}
-```
+`curl -X 'GET' \
+  'https://localhost:7191/info/client/bets/tournament?clientId=9ff2f7e3-34a3-4675-826f-d387120d4a5d' \
+  -H 'accept: */*'`
+
+clientId - id клиента, о котором нужно получить информацию
 
 Возвращаемое значение
+
 `List<EventInfo> eventInfoList` - лист с информацией о событиях
 
 
@@ -180,47 +184,33 @@ Http запрос
 Http запрос
 `GET /statistics/client`
 
-Тело запроса
+Пример использования с curl
 
-```
-{
-  "clietnId": "9ff2f7e3-34a3-4675-826f-d387120d4a5d"
-}
-```
+`curl -X 'GET' \
+  'https://localhost:7191/statistics/client?clientId=2728e16b-74bc-46ef-8e85-eb1d97216040' \
+  -H 'accept: */*'`
+
+clientId - id клиента, статистику которого нужно получить
 
 Возвращаемое значение
-`ClientStatisticsInfo clientStatisticsInfo` - статистика клиента
-```
-{
-  "clientId": "4c8e23ac-e312-42b9-931c-9e9d929cd1cf",
-  "wins": 0,
-  "defeats": 0,
-  "totalBetsSum": 480,
-  "totalWon": 0
-}
-```
+
+Сущность - статистика клиента
 
 
-
-### Статистика клиента
+### Статистика команды
 
 Http запрос
-`GET /statistics/client`
+`GET /statistics/team`
 
-Тело запроса
+Пример использования с curl
 
-```
-{
-  "teamId": "9ff2f7e3-34a3-4675-826f-d387120d4a5d"
-}
-```
+`curl -X 'GET' \
+  'https://localhost:7191/statistics/team?teamId=2728e16b-74bc-46ef-8e85-eb1d97216040' \
+  -H 'accept: */*'`
+
+teamId - id команды, статистику которой нужно получить
 
 Возвращаемое значение
-`TeamStatisticsInfo teamStatisticsInfo` - статистика клиента
-```
-{
-  "teamId": "4c8e23ac-e312-42b9-931c-9e9d929cd1ee",
-  "totalWon": 0,
-  "totalBetsSum": 159
-}
-```
+
+Сущность - статистика команды
+
