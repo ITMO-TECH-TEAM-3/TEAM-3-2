@@ -23,23 +23,24 @@ public class BetsService
         var players = new List<Guid>();
 
         if (teams.Count != 2) return null;
-        
+
         foreach (var teamPlayers in teams.Select(team => _userService.UserListInTeam(team)))
         {
             if (teamPlayers.Count == 0)
                 return null;
             players.AddRange(teamPlayers);
         }
+
         if (players.Contains(clientId)) return null;
         if (!events.Any())
         {
             _context.Events?.Add(new EventInfo(Guid.NewGuid(), eventId, NewCoefficient(sum, sum), teamId,
                 EventResult.NotStarted, sum));
         }
-        if (events.First().Result != EventResult.NotStarted) return null;
-        
+        else if (events.First().Result != EventResult.NotStarted) return null;
+
         UpdateEventsInfo(events, teamId, sum);
-        
+
         var bet = new BetMatch(Guid.NewGuid(), clientId, eventId, sum, teamId, BetResult.InProgress);
         _context.MatchBets!.Add(bet);
         _context.SaveChanges();
@@ -58,6 +59,7 @@ public class BetsService
                 return null;
             players.AddRange(teamPlayers);
         }
+
         if (players.Contains(clientId))
             return null;
         var events = _context.Events!.Where(evt => evt.EventId == eventId).ToList();
@@ -66,8 +68,9 @@ public class BetsService
             _context.Events?.Add(new EventInfo(Guid.NewGuid(), eventId, NewCoefficient(sum, sum), teamId,
                 EventResult.NotStarted, sum));
         }
-        if (events.First().Result != EventResult.NotStarted) return null;
-        
+        else if (events.First().Result != EventResult.NotStarted) return null;
+
+
         UpdateEventsInfo(events, teamId, sum);
         var bet = new BetTournament(Guid.NewGuid(), clientId, eventId, sum, teamId, BetResult.InProgress);
 
@@ -80,7 +83,7 @@ public class BetsService
     {
         if (bettedSum == 0)
             return 0;
-        return (double) allBetsSum / bettedSum;
+        return (double)allBetsSum / bettedSum;
     }
 
     private void UpdateEventsInfo(List<EventInfo> events, Guid teamId, uint sum)
